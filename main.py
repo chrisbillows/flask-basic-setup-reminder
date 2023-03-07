@@ -67,6 +67,7 @@ def myform():
 
     return render_template('myform.html', form=form)
 
+# form validate checks data is valid - here checks form is not empty
 
 
 app.run()
