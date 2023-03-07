@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Form</title>
+</head>
+<body>
+    <h1>My Form</h1>
+    <form method="POST" action="{{ url_for('myform') }}">
+        {{ form.csrf_token }}   <!-- flask built in security measure -->
+        {{ form.name.label }} {{ form.name() }}
+        {{ form.submit() }}
+    </form>
+</body>
+</html>

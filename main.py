@@ -1,7 +1,14 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+
+class MyForm(FlaskForm):
+    name = StringField('Name')
+    submit = SubmitField('Submit')
+
 
 app = Flask(__name__)
-
+app.secret_key = 'mysecretkey'  # store as environment variable
 
 @app.route("/")
 def hello():
@@ -10,7 +17,9 @@ def hello():
         "<p>"
         '<a href="/howdy">If that isnt effusive enough, click here</a>'
         "<br>"
-        '<a href="/basic_input">Enter your input</a>'
+        '<a href="/basic_input">Enter some input via a standard HTML</a>'
+        "<br>"
+        '<a href="/myform">Enter some input via wtforms</a>'
         "</p>"
     )
 
@@ -46,6 +55,18 @@ def output():
 # if methods not specified ['GET'] is the default
 # HTTP terminology client-server request methods (GET, POST, etc.) perspective of the client
 # hence POST because the client is "posting" information to the server
+
+
+@app.route('/myform', methods=['GET', 'POST'])
+def myform():
+    form = MyForm()
+
+    if form.validate_on_submit():
+        name = form.name.data
+        return f'Hello, {name}!'
+
+    return render_template('myform.html', form=form)
+
 
 
 app.run()
