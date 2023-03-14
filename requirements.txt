@@ -1,0 +1,5 @@
+Flask
+WTForms
+requests
+selectorlib
+flask_wtf
